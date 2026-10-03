@@ -20,23 +20,25 @@ const (
 
 var version = "dev"
 
+type flags struct {
+	debugFile   string
+	debug       bool
+	showVersion bool
+}
+
 func main() {
 	cfg, cfgErr := config.Load(config.DefaultPath())
 
-	debug := flag.Bool("debug", false, "enable debug mode")
-	debugFile := flag.String("debug-file", logFile, "path to debug log file (ignored if --debug is not set)")
-	showVersion := flag.Bool("version", false, "print the version and exit")
+	opts := parseFlags()
 
-	flag.Parse()
-
-	if *showVersion {
+	if opts.showVersion {
 		fmt.Println("dday version", version)
 		return
 	}
 
 	log.SetOutput(io.Discard)
-	if *debug {
-		file, err := tea.LogToFile(*debugFile, logLevel)
+	if opts.debug {
+		file, err := tea.LogToFile(opts.debugFile, logLevel)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -51,4 +53,15 @@ func main() {
 	if _, err := program.Run(); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func parseFlags() flags {
+	var opts flags
+
+	flag.BoolVar(&opts.debug, "debug", false, "enable debug mode")
+	flag.StringVar(&opts.debugFile, "debug-file", logFile, "path to debug log file (ignored if --debug is not set)")
+	flag.BoolVar(&opts.showVersion, "version", false, "print the version and exit")
+	flag.Parse()
+
+	return opts
 }
