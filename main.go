@@ -1,9 +1,12 @@
 package main
 
 import (
+	"cmp"
+	"errors"
 	"flag"
 	"fmt"
 	"io"
+	"io/fs"
 	"log"
 	"os"
 
@@ -21,14 +24,14 @@ const (
 var version = "dev"
 
 type flags struct {
+	configPath  string
 	debugFile   string
 	debug       bool
 	showVersion bool
+	noConfig    bool
 }
 
 func main() {
-	cfg, cfgErr := config.Load(config.DefaultPath())
-
 	opts := parseFlags()
 
 	if opts.showVersion {
@@ -45,9 +48,7 @@ func main() {
 		defer file.Close()
 	}
 
-	if cfgErr != nil && !os.IsNotExist(cfgErr) {
-		log.Printf("Could not load config: %v", cfgErr)
-	}
+	cfg := loadConfig(opts.noConfig, opts.configPath)
 
 	program := tea.NewProgram(tui.New(cfg))
 	if _, err := program.Run(); err != nil {
@@ -61,7 +62,33 @@ func parseFlags() flags {
 	flag.BoolVar(&opts.debug, "debug", false, "enable debug mode")
 	flag.StringVar(&opts.debugFile, "debug-file", logFile, "path to debug log file (ignored if --debug is not set)")
 	flag.BoolVar(&opts.showVersion, "version", false, "print the version and exit")
+	flag.BoolVar(&opts.noConfig, "no-config", false, "ignore config.yaml and run with the built-in defaults")
+	flag.StringVar(&opts.configPath, "config", "", "config file to load instead of the default path")
 	flag.Parse()
 
 	return opts
+}
+
+// loadConfig returns the defaults with -no-config, else the file at
+// path or the default path. Only an explicit path must exist.
+func loadConfig(noConfig bool, path string) config.Config {
+	if noConfig {
+		return config.Default()
+	}
+
+	cfg, err := config.Load(cmp.Or(path, config.DefaultPath()))
+	if err != nil && (!errors.Is(err, fs.ErrNotExist) || path != "") {
+		warn("could not load config: %v", err)
+	}
+
+	return cfg
+}
+
+// warn reports a problem found before the TUI starts, on
+// stderr so it is seen without -debug, and in the debug log.
+func warn(format string, args ...any) {
+	text := fmt.Sprintf(format, args...)
+
+	fmt.Fprintln(os.Stderr, "warning: "+text)
+	log.Print(text)
 }
