@@ -49,7 +49,7 @@ Command line flags:
 
 ## Configuration
 
-Configuration is read at startup from `~/.config/dday/config.yaml`. The file is optional: anything it leaves out keeps its built-in default (see `internal/config/config.go`), and an unparsable or invalid file falls back to the defaults entirely. An example config with every setting is provided at `Themes/example-config.yaml`.
+Configuration is read at startup from `$XDG_CONFIG_HOME/tuday/config.yaml`, defaulting to `~/.config/tuday/config.yaml`. The file is optional: anything it leaves out keeps its built-in default (see `internal/config/config.go`), and an unparsable or invalid file falls back to the defaults entirely. An example config with every setting is provided at `Themes/example-config.yaml`.
 
 Configurable items include the year range (or a single year), hints, and the colors of the UI. The year range and hints set the menu's starting values and can still be changed there.
 
