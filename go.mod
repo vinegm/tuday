@@ -1,4 +1,4 @@
-module dday
+module github.com/vinegm/tuday
 
 go 1.25.5
 

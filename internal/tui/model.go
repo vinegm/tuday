@@ -6,14 +6,14 @@ import (
 	tea "charm.land/bubbletea/v2"
 	lg "charm.land/lipgloss/v2"
 
-	"dday/internal/tui/drill"
-	"dday/internal/tui/menu"
-	"dday/internal/tui/results"
+	"github.com/vinegm/tuday/internal/tui/drill"
+	"github.com/vinegm/tuday/internal/tui/menu"
+	"github.com/vinegm/tuday/internal/tui/results"
 
-	"dday/internal/config"
-	"dday/internal/doomsday"
-	"dday/internal/report"
-	"dday/internal/tui/theme"
+	"github.com/vinegm/tuday/internal/config"
+	"github.com/vinegm/tuday/internal/doomsday"
+	"github.com/vinegm/tuday/internal/report"
+	"github.com/vinegm/tuday/internal/tui/theme"
 )
 
 // Smallest terminal the app renders correctly in.

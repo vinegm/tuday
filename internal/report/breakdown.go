@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"time"
 
-	"dday/internal/doomsday"
+	"github.com/vinegm/tuday/internal/doomsday"
 )
 
 // Bucket is one label of a breakdown,

@@ -7,7 +7,7 @@ import (
 
 	"gopkg.in/yaml.v3"
 
-	"dday/internal/doomsday"
+	"github.com/vinegm/tuday/internal/doomsday"
 )
 
 // validate reports an error for any setting

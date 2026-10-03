@@ -3,7 +3,7 @@ package theme
 import (
 	lg "charm.land/lipgloss/v2"
 
-	"dday/internal/config"
+	"github.com/vinegm/tuday/internal/config"
 )
 
 // WindowWidth is the outer width, border included, every window renders at,

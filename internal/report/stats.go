@@ -3,7 +3,7 @@ package report
 import (
 	"slices"
 
-	"dday/internal/doomsday"
+	"github.com/vinegm/tuday/internal/doomsday"
 )
 
 // CountCorrect is how many attempts were answered right.

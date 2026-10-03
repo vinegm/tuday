@@ -7,8 +7,8 @@ import (
 
 	lg "charm.land/lipgloss/v2"
 
-	"dday/internal/doomsday"
-	"dday/internal/report"
+	"github.com/vinegm/tuday/internal/doomsday"
+	"github.com/vinegm/tuday/internal/report"
 )
 
 const (

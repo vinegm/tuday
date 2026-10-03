@@ -7,9 +7,9 @@ import (
 	tea "charm.land/bubbletea/v2"
 	lg "charm.land/lipgloss/v2"
 
-	"dday/internal/doomsday"
-	"dday/internal/tui/drill"
-	"dday/internal/tui/theme"
+	"github.com/vinegm/tuday/internal/doomsday"
+	"github.com/vinegm/tuday/internal/tui/drill"
+	"github.com/vinegm/tuday/internal/tui/theme"
 )
 
 type menuOption int

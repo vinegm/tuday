@@ -12,8 +12,8 @@ import (
 
 	tea "charm.land/bubbletea/v2"
 
-	"dday/internal/config"
-	"dday/internal/tui"
+	"github.com/vinegm/tuday/internal/config"
+	"github.com/vinegm/tuday/internal/tui"
 )
 
 const (

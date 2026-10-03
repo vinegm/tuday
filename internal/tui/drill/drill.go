@@ -8,8 +8,8 @@ import (
 
 	tea "charm.land/bubbletea/v2"
 
-	"dday/internal/doomsday"
-	"dday/internal/tui/theme"
+	"github.com/vinegm/tuday/internal/doomsday"
+	"github.com/vinegm/tuday/internal/tui/theme"
 )
 
 // How often the question timer on screen refreshes.
