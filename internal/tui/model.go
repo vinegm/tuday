@@ -67,14 +67,12 @@ func New(cfg config.Config) Model {
 	}
 }
 
-// Init initializes the model and returns an initial command.
-//
-//	WARN: This function is required by the Bubble Tea framework.
+// Init is the command run on start, none.
 func (model Model) Init() tea.Cmd {
 	return nil
 }
 
-// Tea update loop
+// Update is the tea update loop.
 func (model Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
@@ -125,7 +123,7 @@ func (model *Model) finish(attempts []doomsday.Attempt) bool {
 	return true
 }
 
-// Tea view rendering, handles terminal size checks
+// View handles terminal size checks
 // and delegates to the current window.
 func (model Model) View() tea.View {
 	content := model.viewContent()

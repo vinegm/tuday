@@ -1,4 +1,4 @@
-BINARY := dday
+BINARY := tuday
 
 .PHONY: build
 build:

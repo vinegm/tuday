@@ -39,7 +39,7 @@ type menuItem struct {
 	action menuOption
 }
 
-// StartDrillMsg Asks for control to
+// StartDrillMsg asks for control to
 // start a drill with these options.
 type StartDrillMsg struct {
 	Options drill.Options
@@ -71,6 +71,7 @@ func New(th *theme.Theme, options drill.Options, single bool) *Window {
 	}
 }
 
+// Update handles the keys.
 func (window *Window) Update(msg tea.Msg) tea.Cmd {
 	switch msg := msg.(type) {
 	case tea.KeyPressMsg:
@@ -109,12 +110,12 @@ func (window *Window) View(_, _ int) string {
 
 func getMenuTitle() string {
 	art := `
-   ▐▌   ▐▌
-▗▞▀▜▌▗▞▀▜▌▗▞▀▜▌▄   ▄
-▝▚▄▟▌▝▚▄▟▌▝▚▄▟▌█   █
-                ▀▀▀█
-               ▄   █
-                ▀▀▀  `
+  ▐▌            ▐▌
+▗▄▟▙▄▖ ▄   ▄ ▗▞▀▜▌▗▞▀▜▌▄   ▄
+  ▐▙▄▖ █▄▄▄█ ▝▚▄▟▌▝▚▄▟▌█   █
+                        ▀▀▀█
+                       ▄   █
+                        ▀▀▀  `
 
 	return art[1:] // Remove leading newline
 }

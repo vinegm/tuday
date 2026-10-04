@@ -24,7 +24,7 @@ func (window *Window) View(_, _ int) string {
 	th := window.theme
 
 	lines := []string{
-		th.TitleStyle.Render("dday") + th.MutedStyle.Render("  "+window.options.Years.Label()),
+		th.TitleStyle.Render("tuday") + th.MutedStyle.Render("  "+window.options.Years.Label()),
 		th.TextStyle.Render(window.score()),
 		window.history(),
 		"",

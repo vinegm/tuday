@@ -18,7 +18,7 @@ import (
 )
 
 const (
-	logFile  = "/tmp/dday.log"
+	logFile  = "/tmp/tuday.log"
 	logLevel = "debug"
 )
 
@@ -36,7 +36,7 @@ func main() {
 	opts := parseFlags()
 
 	if opts.showVersion {
-		fmt.Println("dday version", version)
+		fmt.Println("tuday version", version)
 		return
 	}
 

@@ -1,16 +1,16 @@
 <div align="center">
 <pre>
-.    ▐▌   ▐▌             .
-. ▗▞▀▜▌▗▞▀▜▌▗▞▀▜▌▄   ▄   .
-. ▝▚▄▟▌▝▚▄▟▌▝▚▄▟▌█   █   .
-.                 ▀▀▀█   .
-.                ▄   █   .
-.                 ▀▀▀    .
+.   ▐▌            ▐▌              .
+. ▗▄▟▙▄▖ ▄   ▄ ▗▞▀▜▌▗▞▀▜▌▄   ▄    .
+.   ▐▙▄▖ █▄▄▄█ ▝▚▄▟▌▝▚▄▟▌█   █    .
+.                         ▀▀▀█    .
+.                        ▄   █    .
+.                         ▀▀▀     .
 <strong>Doomsday rule trainer TUI in Go</strong>
 </pre>
 </div>
 
-dday is a TUI trainer for the [Doomsday rule](https://en.wikipedia.org/wiki/Doomsday_rule), built with Go and the Bubble Tea TUI framework. It shows you a random date, you name its weekday against the clock, and when you stop it breaks down where you are weakest by weekday, month and year.
+tuday is a TUI trainer for the [Doomsday rule](https://en.wikipedia.org/wiki/Doomsday_rule), built with Go and the Bubble Tea TUI framework. It shows you a random date, you name its weekday against the clock, and when you stop it breaks down where you are weakest by weekday, month and year.
 
 ## Features
 
@@ -35,15 +35,15 @@ go run main.go
 Or build a standalone binary:
 
 ```bash
-go build -o dday ./
-./dday
+go build -o tuday ./
+./tuday
 ```
 
 Command line flags:
 
 - `--version` : print the version and exit
 - `--debug` : enable debug logging
-- `--debug-file <path>` : write debug logs to the specified file (defaults to `/tmp/dday.log`)
+- `--debug-file <path>` : write debug logs to the specified file (defaults to `/tmp/tuday.log`)
 - `--config <path>` : load the config from `<path>` instead of the default location
 - `--no-config` : ignore the config file and run with the built-in defaults
 
@@ -81,7 +81,7 @@ Results:
 
 ## Themes
 
-Theme files are stored in the `Themes` directory; a few presets are included (catppuccin-mocha, gruvbox, tokyo-night). Copy one to `~/.config/dday/config.yaml`, or merge its colors into your config.
+Theme files are stored in the `Themes` directory; a few presets are included (catppuccin-mocha, gruvbox, tokyo-night). Copy one to `~/.config/tuday/config.yaml`, or merge its colors into your config.
 
 ## Development
 

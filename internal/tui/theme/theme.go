@@ -26,6 +26,7 @@ type Theme struct {
 	WindowStyle lg.Style
 }
 
+// NewTheme resolves a Theme from the config.
 func NewTheme(cfg config.Config) *Theme {
 	theme := &Theme{config: cfg}
 	theme.setStyles()
