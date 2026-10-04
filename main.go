@@ -13,6 +13,7 @@ import (
 	tea "charm.land/bubbletea/v2"
 
 	"github.com/vinegm/tuday/internal/config"
+	"github.com/vinegm/tuday/internal/doomsday"
 	"github.com/vinegm/tuday/internal/tui"
 )
 
@@ -50,7 +51,7 @@ func main() {
 
 	cfg := loadConfig(opts.noConfig, opts.configPath)
 
-	program := tea.NewProgram(tui.New(cfg))
+	program := tea.NewProgram(tui.New(drillSettings(cfg)))
 	if _, err := program.Run(); err != nil {
 		log.Fatal(err)
 	}
@@ -79,6 +80,25 @@ func loadConfig(noConfig bool, path string) config.Config {
 	cfg, err := config.Load(cmp.Or(path, config.DefaultPath()))
 	if err != nil && (!errors.Is(err, fs.ErrNotExist) || path != "") {
 		warn("could not load config: %v", err)
+	}
+
+	return cfg
+}
+
+// drillSettings is cfg with a year range no drill can
+// run from reset to the default, keeping the rest of the file.
+func drillSettings(cfg config.Config) config.Config {
+	years := doomsday.Years{
+		Start: cfg.StartYear,
+		End:   cfg.EndYear,
+	}
+
+	if err := years.Validate(); err != nil {
+		warn("invalid years in the config, using the defaults: %v", err)
+
+		defaults := config.Default()
+		cfg.StartYear = defaults.StartYear
+		cfg.EndYear = defaults.EndYear
 	}
 
 	return cfg
