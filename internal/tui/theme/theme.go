@@ -1,6 +1,8 @@
 package theme
 
 import (
+	"strings"
+
 	lg "charm.land/lipgloss/v2"
 
 	"github.com/vinegm/tuday/internal/config"
@@ -24,6 +26,14 @@ type Theme struct {
 	WrongStyle            lg.Style
 
 	WindowStyle lg.Style
+
+	keyHintsStyle lg.Style
+}
+
+// Hint is a key the user can press, and what it does.
+type Hint struct {
+	Key  string
+	Desc string
 }
 
 // NewTheme resolves a Theme from the config.
@@ -79,4 +89,21 @@ func (theme *Theme) setStyles() {
 		BorderBackground(lg.Color(colors.Bg)).
 		BorderForeground(lg.Color(colors.Border)).
 		Align(lg.Center)
+
+	keyHints := colors.KeyHints
+	if keyHints == "" {
+		keyHints = colors.Muted
+	}
+
+	theme.keyHintsStyle = withFg(lg.NewStyle(), keyHints)
+}
+
+// RenderHints draws the key hints bar, cut to fit in width.
+func (theme *Theme) RenderHints(hints []Hint, width int) string {
+	parts := make([]string, len(hints))
+	for i, hint := range hints {
+		parts[i] = hint.Desc + ": " + hint.Key
+	}
+
+	return theme.keyHintsStyle.MaxWidth(width).Render(strings.Join(parts, " | "))
 }

@@ -19,3 +19,4 @@ theme:
   muted: "#6c6c6c" # fg of hints and timers
   correct: "#5faf5f" # right answers and the filled part of accuracy bars
   wrong: "#d75f5f" # wrong answers and the empty part of accuracy bars
+  key_hints: "" # fg of the key hints at the bottom, defaults to muted

@@ -132,6 +132,22 @@ func (window *Window) Update(msg tea.Msg) tea.Cmd {
 	return nil
 }
 
+// Hints is the keys for the key hints bar.
+func (window *Window) Hints() []theme.Hint {
+	if window.input == "" {
+		return []theme.Hint{
+			{Key: "0-7", Desc: "Answer"},
+			{Key: "esc", Desc: "Finish"},
+		}
+	}
+
+	return []theme.Hint{
+		{Key: "enter", Desc: "Answer"},
+		{Key: "ctrl+u", Desc: "Clear"},
+		{Key: "esc", Desc: "Finish"},
+	}
+}
+
 func (window *Window) handleKey(msg tea.KeyPressMsg) tea.Cmd {
 	switch msg.String() {
 	case "esc":

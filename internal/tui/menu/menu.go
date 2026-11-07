@@ -24,13 +24,9 @@ const (
 	quit
 )
 
-const (
-	// Longest year a year row
-	// accepts typed in.
-	maxYearDigits = 4
-
-	help = "←/→ adjust · shift ±10 · type a year · enter select"
-)
+// Longest year a year row
+// accepts typed in.
+const maxYearDigits = 4
 
 // menuItem is the label shown and
 // the action taken when selected.
@@ -105,10 +101,39 @@ func (window *Window) View() string {
 		sb.WriteString(window.theme.TextStyle.Render(item.label))
 	}
 
-	sb.WriteString("\n\n")
-	sb.WriteString(window.theme.MutedStyle.Render(help))
-
 	return window.theme.WindowStyle.Render(sb.String())
+}
+
+// Hints is the keys for the key hints bar.
+func (window *Window) Hints() []theme.Hint {
+	if window.typing {
+		return []theme.Hint{
+			{Key: "0-9", Desc: "Type"},
+			{Key: "backspace", Desc: "Delete"},
+			{Key: "jk", Desc: "Done"},
+			{Key: "q", Desc: "Quit"},
+		}
+	}
+
+	hints := []theme.Hint{{Key: "jk", Desc: "Move"}}
+
+	switch window.current() {
+	case startDrill, quit:
+		hints = append(hints, theme.Hint{Key: "enter", Desc: "Select"})
+
+	case singleYear, showDoomsday, cheatsheet:
+		hints = append(hints, theme.Hint{Key: "enter", Desc: "Toggle"})
+
+	case startYear, endYear:
+		hints = append(
+			hints,
+			theme.Hint{Key: "hl", Desc: "Change"},
+			theme.Hint{Key: "HL", Desc: "±10"},
+			theme.Hint{Key: "0-9", Desc: "Type"},
+		)
+	}
+
+	return append(hints, theme.Hint{Key: "q", Desc: "Quit"})
 }
 
 func getMenuTitle() string {

@@ -20,6 +20,7 @@ tuday is a TUI trainer for the [Doomsday rule](https://en.wikipedia.org/wiki/Doo
 - Instant answers with `0`-`7`, or type a weekday name or any unambiguous prefix of one
 - Optional hints: the year's doomsday next to each question, and a weekday number cheatsheet
 - End-of-session results ranking weekdays, months and years worst-first (lowest accuracy, then slowest), with accuracy bars
+- A key hints bar at the bottom of the screen
 - Configurable colors (see the Themes directory)
 
 ## Getting Started

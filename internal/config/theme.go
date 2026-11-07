@@ -10,6 +10,7 @@ type Theme struct {
 	Muted    string `yaml:"muted"`  // hints and timers
 	Correct  string `yaml:"correct"`
 	Wrong    string `yaml:"wrong"`
+	KeyHints string `yaml:"key_hints"` // fg of the key hints bar at the bottom, defaults to muted
 }
 
 func defaultTheme() Theme {
@@ -22,5 +23,6 @@ func defaultTheme() Theme {
 		Muted:    "#6c6c6c",
 		Correct:  "#5faf5f",
 		Wrong:    "#d75f5f",
+		KeyHints: "",
 	}
 }

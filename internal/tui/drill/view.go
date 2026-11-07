@@ -11,13 +11,9 @@ import (
 	"github.com/vinegm/tuday/internal/report"
 )
 
-const (
-	// How many of the latest answers
-	// the history strip shows.
-	historyLength = 25
-
-	help = "enter answer ~ 0-7 answer instantly ~ esc finish"
-)
+// How many of the latest answers
+// the history strip shows.
+const historyLength = 25
 
 // SetSize does nothing, the drill is drawn at its own size.
 func (window *Window) SetSize(_, _ int) {}
@@ -47,7 +43,6 @@ func (window *Window) View() string {
 		lines,
 		"",
 		th.MutedStyle.Render(window.cheatsheet()),
-		th.MutedStyle.Render(help),
 	)
 
 	return th.WindowStyle.Render(strings.Join(lines, "\n"))

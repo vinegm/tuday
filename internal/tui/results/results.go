@@ -14,11 +14,9 @@ import (
 
 // Lines the window spends around
 // the breakdown table.
-const chromeHeight = 12
+const chromeHeight = 9
 
 const barWidth = 12
-
-const help = "enter again · ←/→ breakdown · j/k scroll · q menu"
 
 type (
 	// AgainMsg asks for control to drill again
@@ -68,6 +66,21 @@ func (window *Window) Update(msg tea.Msg) tea.Cmd {
 	}
 
 	return nil
+}
+
+// Hints is the keys for the key hints bar.
+func (window *Window) Hints() []theme.Hint {
+	hints := []theme.Hint{{Key: "hl", Desc: "Breakdown"}}
+
+	if window.rankedCount() > window.visible {
+		hints = append(hints, theme.Hint{Key: "jk", Desc: "Scroll"})
+	}
+
+	return append(
+		hints,
+		theme.Hint{Key: "enter", Desc: "Again"},
+		theme.Hint{Key: "q", Desc: "Menu"},
+	)
 }
 
 func (window *Window) handleKey(key string) tea.Cmd {
@@ -140,8 +153,6 @@ func (window *Window) View() string {
 		"",
 		lg.JoinVertical(lg.Left, rows...),
 		th.MutedStyle.Render(window.scrollMarker(len(ranked), window.visible)),
-		"",
-		th.MutedStyle.Render(help),
 	}
 
 	return th.WindowStyle.Render(strings.Join(lines, "\n"))
