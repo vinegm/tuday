@@ -81,8 +81,11 @@ func (window *Window) Update(msg tea.Msg) tea.Cmd {
 	return nil
 }
 
+// SetSize does nothing, the menu is drawn at its own size.
+func (window *Window) SetSize(_, _ int) {}
+
 // View renders the menu window as a string.
-func (window *Window) View(_, _ int) string {
+func (window *Window) View() string {
 	var sb strings.Builder
 
 	// WARN: Left-aligned so the art's lines are

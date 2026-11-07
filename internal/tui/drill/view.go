@@ -19,8 +19,11 @@ const (
 	help = "enter answer ~ 0-7 answer instantly ~ esc finish"
 )
 
+// SetSize does nothing, the drill is drawn at its own size.
+func (window *Window) SetSize(_, _ int) {}
+
 // View renders the drill.
-func (window *Window) View(_, _ int) string {
+func (window *Window) View() string {
 	th := window.theme
 
 	lines := []string{

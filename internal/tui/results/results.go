@@ -36,8 +36,9 @@ type Window struct {
 	attempts   []doomsday.Attempt
 	breakdowns []report.Breakdown
 
-	tab    int
-	scroll int
+	tab     int
+	scroll  int
+	visible int // rows of the breakdown shown at the window's size
 
 	theme *theme.Theme
 }
@@ -99,27 +100,34 @@ func (window *Window) handleKey(key string) tea.Cmd {
 	return nil
 }
 
+// SetSize fits the breakdown to height, with room for the longest
+// one so that switching between them doesn't resize the window.
+func (window *Window) SetSize(_, height int) {
+	longest := 0
+	for _, breakdown := range window.breakdowns {
+		longest = max(longest, len(breakdown.Buckets))
+	}
+
+	window.visible = min(longest, max(1, height-chromeHeight))
+	window.scroll = min(max(window.scroll, 0), max(0, window.rankedCount()-window.visible))
+}
+
+func (window *Window) rankedCount() int {
+	return len(window.breakdowns[window.tab].Buckets)
+}
+
 // View renders the results window as a string.
-func (window *Window) View(_, height int) string {
+func (window *Window) View() string {
 	th := window.theme
 	breakdown := window.breakdowns[window.tab]
 	ranked := breakdown.Ranked()
 
-	// Room for the longest breakdown
-	longest := 0
-	for _, other := range window.breakdowns {
-		longest = max(longest, len(other.Buckets))
-	}
-
-	visible := min(longest, max(1, height-chromeHeight))
-	window.scroll = min(max(window.scroll, 0), max(0, len(ranked)-visible))
-
-	rows := make([]string, 0, visible)
-	for _, bucket := range ranked[window.scroll:min(len(ranked), window.scroll+visible)] {
+	rows := make([]string, 0, window.visible)
+	for _, bucket := range ranked[window.scroll:min(len(ranked), window.scroll+window.visible)] {
 		rows = append(rows, window.row(bucket))
 	}
 
-	for len(rows) < visible {
+	for len(rows) < window.visible {
 		rows = append(rows, "")
 	}
 
@@ -131,7 +139,7 @@ func (window *Window) View(_, height int) string {
 		th.MutedStyle.Render(worstLine(breakdown)),
 		"",
 		lg.JoinVertical(lg.Left, rows...),
-		th.MutedStyle.Render(window.scrollMarker(len(ranked), visible)),
+		th.MutedStyle.Render(window.scrollMarker(len(ranked), window.visible)),
 		"",
 		th.MutedStyle.Render(help),
 	}

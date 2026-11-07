@@ -24,11 +24,12 @@ const (
 	minHeight = 20
 )
 
-// Window is the interface that holds methods to handle
-// updates and rendering for different windows.
+// Window is a screen of the app. SetSize is called after
+// every Update, before View draws at that size.
 type Window interface {
 	Update(msg tea.Msg) tea.Cmd
-	View(width, height int) string
+	SetSize(width, height int)
+	View() string
 }
 
 // Model represents the state of the application.
@@ -72,8 +73,15 @@ func (model Model) Init() tea.Cmd {
 	return nil
 }
 
-// Update is the tea update loop.
+// Update handles a message, then sizes the current window for View.
 func (model Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
+	model, cmd := model.update(msg)
+	model.currentWindow.SetSize(model.width, model.height)
+
+	return model, cmd
+}
+
+func (model Model) update(msg tea.Msg) (Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.WindowSizeMsg:
 		model.width = msg.Width
@@ -147,6 +155,5 @@ func (model Model) viewContent() string {
 		return fmt.Sprintf("Terminal too small — need at least %dx%d", minWidth, minHeight)
 	}
 
-	// Render centered base panel
-	return model.currentWindow.View(model.width, model.height)
+	return model.currentWindow.View()
 }
