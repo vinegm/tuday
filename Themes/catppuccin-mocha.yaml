@@ -1,8 +1,8 @@
-# Colors
-fg_color: "#cdd6f4"
-selected_color: "#cba6f7"
-border_color: "#89b4fa"
-accent_color: "#f9e2af"
-muted_color: "#6c7086"
-correct_color: "#a6e3a1"
-wrong_color: "#f38ba8"
+theme:
+  fg: "#cdd6f4"
+  selected: "#cba6f7"
+  border: "#89b4fa"
+  accent: "#f9e2af"
+  muted: "#6c7086"
+  correct: "#a6e3a1"
+  wrong: "#f38ba8"

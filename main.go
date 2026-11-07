@@ -106,16 +106,16 @@ func loadConfig(noConfig bool, path string) config.Config {
 // run from reset to the default, keeping the rest of the file.
 func drillSettings(cfg config.Config) config.Config {
 	years := doomsday.Years{
-		Start: cfg.StartYear,
-		End:   cfg.EndYear,
+		Start: cfg.Drill.StartYear,
+		End:   cfg.Drill.EndYear,
 	}
 
 	if err := years.Validate(); err != nil {
 		warn("invalid years in the config, using the defaults: %v", err)
 
 		defaults := config.Default()
-		cfg.StartYear = defaults.StartYear
-		cfg.EndYear = defaults.EndYear
+		cfg.Drill.StartYear = defaults.Drill.StartYear
+		cfg.Drill.EndYear = defaults.Drill.EndYear
 	}
 
 	return cfg

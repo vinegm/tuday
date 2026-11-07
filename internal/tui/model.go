@@ -49,14 +49,14 @@ func New(cfg config.Config) Model {
 	th := theme.NewTheme(cfg)
 	options := drill.Options{
 		Years: doomsday.Years{
-			Start: cfg.StartYear,
-			End:   cfg.EndYear,
+			Start: cfg.Drill.StartYear,
+			End:   cfg.Drill.EndYear,
 		},
-		ShowDoomsday: cfg.ShowDoomsday,
-		Cheatsheet:   cfg.Cheatsheet,
+		ShowDoomsday: cfg.Drill.ShowDoomsday,
+		Cheatsheet:   cfg.Drill.Cheatsheet,
 	}
 
-	menuWindow := menu.New(th, options, cfg.SingleYear)
+	menuWindow := menu.New(th, options, cfg.Drill.SingleYear)
 
 	return Model{
 		currentWindow: menuWindow,

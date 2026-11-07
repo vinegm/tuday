@@ -1,20 +1,21 @@
-# These are all the settings you can configure in a theme file.
-# all values in here are the default values, but you can omit any of these and it will just use the defaults instead.
-# empty values for colors will use the defaults/terminal colors.
+# These are all the settings you can configure in a config file.
+# All values here are the defaults; omit any of them and the default is used instead.
+# Empty colours use the terminal's colours.
+# This file must match the defaults in internal/config/config.go and theme.go.
 
-# Drill settings
-start_year: 1900 # first year dates are drawn from (1-9999)
-end_year: 2099 # last year dates are drawn from (1-9999, not before start_year)
-single_year: false # drill only start_year, ignoring end_year
-show_doomsday: false # show the year's doomsday alongside each date
-cheatsheet: false # show the 0-7 weekday numbers under the prompt
+drill:
+  start_year: 1900 # first year dates are drawn from (1-9999)
+  end_year: 2099 # last year dates are drawn from (1-9999, not before start_year)
+  single_year: false # drill only start_year, ignoring end_year
+  show_doomsday: false # show the year's doomsday alongside each date
+  cheatsheet: false # show the 0-7 weekday numbers under the prompt
 
-# Colors
-fg_color: "" # Used as the default fg color for all text
-bg_color: "" # Used as the bg color for the window
-selected_color: "#5a5a5a" # fg color for the selected menu item, the active tab and the input prompt
-border_color: "" # Missing a field is also fine, will use defaults/terminal colors
-accent_color: "" # fg color for the date being asked
-muted_color: "#6c6c6c" # fg color for hints, timers and help lines
-correct_color: "#5faf5f" # right answers and the filled part of accuracy bars
-wrong_color: "#d75f5f" # wrong answers and the empty part of accuracy bars
+theme:
+  fg: "" # default fg for all text
+  bg: "" # bg of the window
+  selected: "#5a5a5a" # fg of the selected menu item, the active tab and the input prompt
+  border: ""
+  accent: "" # fg of the date being asked
+  muted: "#6c6c6c" # fg of hints and timers
+  correct: "#5faf5f" # right answers and the filled part of accuracy bars
+  wrong: "#d75f5f" # wrong answers and the empty part of accuracy bars

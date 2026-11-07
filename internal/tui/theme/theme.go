@@ -59,22 +59,24 @@ func withBg(base lg.Style, color string) lg.Style {
 
 // Updates styles based on the current configuration.
 func (theme *Theme) setStyles() {
-	genericStyle := withFg(lg.NewStyle(), theme.config.FgColor)
+	colors := theme.config.Theme
+
+	genericStyle := withFg(lg.NewStyle(), colors.Fg)
 	genericMenuTextStyle := lg.NewStyle().Inherit(genericStyle).Bold(true)
 
 	theme.TextStyle = lg.NewStyle().Inherit(genericStyle)
 	theme.TitleStyle = lg.NewStyle().Inherit(genericMenuTextStyle)
-	theme.SelectedMenuTextStyle = withFg(lg.NewStyle().Inherit(genericMenuTextStyle), theme.config.SelectedColor)
-	theme.AccentStyle = withFg(lg.NewStyle().Inherit(genericMenuTextStyle), theme.config.AccentColor)
-	theme.MutedStyle = withFg(lg.NewStyle().Inherit(genericStyle), theme.config.MutedColor)
-	theme.CorrectStyle = withFg(lg.NewStyle().Inherit(genericStyle), theme.config.CorrectColor)
-	theme.WrongStyle = withFg(lg.NewStyle().Inherit(genericStyle), theme.config.WrongColor)
+	theme.SelectedMenuTextStyle = withFg(lg.NewStyle().Inherit(genericMenuTextStyle), colors.Selected)
+	theme.AccentStyle = withFg(lg.NewStyle().Inherit(genericMenuTextStyle), colors.Accent)
+	theme.MutedStyle = withFg(lg.NewStyle().Inherit(genericStyle), colors.Muted)
+	theme.CorrectStyle = withFg(lg.NewStyle().Inherit(genericStyle), colors.Correct)
+	theme.WrongStyle = withFg(lg.NewStyle().Inherit(genericStyle), colors.Wrong)
 
-	theme.WindowStyle = withBg(lg.NewStyle(), theme.config.BgColor).
+	theme.WindowStyle = withBg(lg.NewStyle(), colors.Bg).
 		Width(WindowWidth).
 		Padding(0, 1).
 		Border(lg.RoundedBorder()).
-		BorderBackground(lg.Color(theme.config.BgColor)).
-		BorderForeground(lg.Color(theme.config.BorderColor)).
+		BorderBackground(lg.Color(colors.Bg)).
+		BorderForeground(lg.Color(colors.Border)).
 		Align(lg.Center)
 }
