@@ -23,13 +23,25 @@ tuday is a TUI trainer for the [Doomsday rule](https://en.wikipedia.org/wiki/Doo
 - A key hints bar at the bottom of the screen
 - Configurable colors (see the Themes directory)
 
-## Getting Started
+## Install
+
+With Go 1.25 or newer (see `go.mod`):
+
+```bash
+go install github.com/vinegm/tuday@latest
+```
+
+Or download the archive for your system from the [releases page](https://github.com/vinegm/tuday/releases).
+
+## Building from source
 
 Prerequisites: Go 1.25 or newer (see `go.mod`)
 
 Clone the repository and run locally:
 
 ```bash
+git clone https://github.com/vinegm/tuday.git
+cd tuday
 go run main.go
 ```
 
