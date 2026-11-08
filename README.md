@@ -95,7 +95,7 @@ Results:
 
 ## Themes
 
-Theme files are stored in the `Themes` directory; a few presets are included (catppuccin-mocha, gruvbox, tokyo-night). Copy one to `~/.config/tuday/config.yaml`, or merge its `theme` section into your config.
+Theme files are stored in the `Themes` directory; several presets are included (catppuccin-mocha, dracula, gruvbox, rose-pine, tokyo-night). Copy one to `~/.config/tuday/config.yaml`, or merge its `theme` section into your config.
 
 ## Development
 

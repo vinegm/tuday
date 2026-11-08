@@ -1,0 +1,8 @@
+theme:
+  fg: "#f8f8f2"
+  selected: "#ff79c6"
+  border: "#bd93f9"
+  accent: "#f1fa8c"
+  muted: "#6272a4"
+  correct: "#50fa7b"
+  wrong: "#ff5555"
