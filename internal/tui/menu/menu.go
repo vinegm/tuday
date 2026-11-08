@@ -221,7 +221,7 @@ func (window *Window) yearLabel(row menuOption, year int) string {
 		return window.typed + "_"
 	}
 
-	return strconv.Itoa(year)
+	return "◂ " + strconv.Itoa(year) + " ▸"
 }
 
 func onOff(on bool) string {
