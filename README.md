@@ -108,6 +108,10 @@ make ci      # format check, vet, lint and test
 
 Linting and formatting use [golangci-lint](https://golangci-lint.run/welcome/install/).
 
+## Contributing
+
+Contributions are welcome! Open issues or pull requests for bugs, improvements, or new themes. If you prefer, feel free to fork the project and customize it for your needs.
+
 ## License
 
 This project is licensed under the MIT License, see the [LICENSE](LICENSE) file for details.
