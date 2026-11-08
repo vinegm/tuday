@@ -49,14 +49,14 @@ func (years Years) Validate() error {
 
 // RandomDate picks a random day from the
 // given range of years, inclusive.
-func RandomDate(years Years) time.Time {
+func RandomDate(rng *rand.Rand, years Years) time.Time {
 	first := time.Date(years.Start, time.January, 1, 0, 0, 0, 0, time.UTC)
 	last := time.Date(years.End, time.December, 31, 0, 0, 0, 0, time.UTC)
 
 	// WARN: time.Duration would overflow past ~292 years.
 	days := (last.Unix()-first.Unix())/secondsPerDay + 1
 
-	return first.AddDate(0, 0, int(rand.Int64N(days)))
+	return first.AddDate(0, 0, int(rng.Int64N(days)))
 }
 
 // FormatDate renders a human readable

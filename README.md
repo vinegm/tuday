@@ -54,6 +54,7 @@ go build -o tuday ./
 
 Command line flags:
 
+- `--seed <seed>` : ask the same dates every run, as the demo does
 - `--version` : print the version and exit
 - `--debug` : enable debug logging
 - `--debug-file <path>` : write debug logs to the specified file (defaults to `/tmp/tuday.log`)

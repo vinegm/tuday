@@ -28,6 +28,7 @@ var version = "dev"
 
 type flags struct {
 	configPath  string
+	seed        string
 	debugFile   string
 	debug       bool
 	showVersion bool
@@ -53,7 +54,7 @@ func main() {
 
 	cfg := loadConfig(opts.noConfig, opts.configPath)
 
-	program := tea.NewProgram(tui.New(drillSettings(cfg)))
+	program := tea.NewProgram(tui.New(drillSettings(cfg), opts.seed))
 	if _, err := program.Run(); err != nil {
 		log.Fatal(err)
 	}
@@ -77,6 +78,7 @@ func currentVersion() string {
 func parseFlags() flags {
 	var opts flags
 
+	flag.StringVar(&opts.seed, "seed", "", "ask the same dates every run, as for a recorded demo")
 	flag.BoolVar(&opts.debug, "debug", false, "enable debug mode")
 	flag.StringVar(&opts.debugFile, "debug-file", logFile, "path to debug log file (ignored if --debug is not set)")
 	flag.BoolVar(&opts.showVersion, "version", false, "print the version and exit")

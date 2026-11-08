@@ -2,6 +2,8 @@ package drill
 
 import (
 	"fmt"
+	"hash/fnv"
+	"math/rand/v2"
 	"strings"
 	"time"
 	"unicode"
@@ -25,6 +27,7 @@ type Options struct {
 	Years        doomsday.Years
 	ShowDoomsday bool
 	Cheatsheet   bool
+	Seed         string // date order, random when empty
 }
 
 type (
@@ -83,6 +86,7 @@ func (last feedback) String() string {
 type Window struct {
 	options  Options
 	attempts []doomsday.Attempt
+	rng      *rand.Rand
 
 	date    time.Time
 	askedAt time.Time
@@ -106,6 +110,7 @@ func New(th *theme.Theme) *Window {
 // Start begins a fresh session with the given options.
 func (window *Window) Start(options Options) tea.Cmd {
 	window.options = options
+	window.rng = rngFrom(options.Seed)
 	window.attempts = nil
 	window.last = nil
 	window.tickTag++
@@ -230,9 +235,22 @@ func (window *Window) submit(raw string) tea.Cmd {
 }
 
 func (window *Window) nextQuestion() {
-	window.date = doomsday.RandomDate(window.options.Years)
+	window.date = doomsday.RandomDate(window.rng, window.options.Years)
 	window.askedAt = time.Now()
 	window.input = ""
+}
+
+// rngFrom is where a session's questions come from: the same seed
+// asks the same ones, and an empty seed different ones every time.
+func rngFrom(seed string) *rand.Rand {
+	if seed == "" {
+		return rand.New(rand.NewPCG(rand.Uint64(), rand.Uint64()))
+	}
+
+	hash := fnv.New64a()
+	hash.Write([]byte(seed))
+
+	return rand.New(rand.NewPCG(hash.Sum64(), 0))
 }
 
 func (window *Window) finish() tea.Cmd {

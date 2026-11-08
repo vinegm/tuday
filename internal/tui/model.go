@@ -49,7 +49,7 @@ type Model struct {
 }
 
 // New creates a new model with initial state.
-func New(cfg config.Config) Model {
+func New(cfg config.Config, seed string) Model {
 	th := theme.NewTheme(cfg)
 	options := drill.Options{
 		Years: doomsday.Years{
@@ -58,6 +58,7 @@ func New(cfg config.Config) Model {
 		},
 		ShowDoomsday: cfg.Drill.ShowDoomsday,
 		Cheatsheet:   cfg.Drill.Cheatsheet,
+		Seed:         seed,
 	}
 
 	menuWindow := menu.New(th, options, cfg.Drill.SingleYear)
