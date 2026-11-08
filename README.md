@@ -12,6 +12,8 @@
 
 tuday is a TUI trainer for the [Doomsday rule](https://en.wikipedia.org/wiki/Doomsday_rule), built with Go and the Bubble Tea TUI framework. It shows you a random date, you name its weekday against the clock, and when you stop it breaks down where you are weakest by weekday, month and year.
 
+![demo](assets/demo.gif)
+
 ## Features
 
 - Terminal UI using Bubble Tea and Lip Gloss
@@ -106,7 +108,7 @@ make test    # run the test suite
 make ci      # format check, vet, lint and test
 ```
 
-Linting and formatting use [golangci-lint](https://golangci-lint.run/welcome/install/).
+Linting and formatting use [golangci-lint](https://golangci-lint.run/welcome/install/); `make demo` regenerates the demo gif with [vhs](https://github.com/charmbracelet/vhs).
 
 ## Contributing
 
