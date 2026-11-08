@@ -163,7 +163,7 @@ func (window *Window) summary() string {
 	percent := 100 * float64(correct) / float64(len(window.attempts))
 
 	return fmt.Sprintf(
-		"%d/%d correct (%.0f%%) ~ median %.1fs ~ worst %.1fs",
+		"%d/%d correct (%.0f%%) · median %.1fs · worst %.1fs",
 		correct,
 		len(window.attempts),
 		percent,
