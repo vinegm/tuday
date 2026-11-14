@@ -4,6 +4,7 @@ import (
 	"strconv"
 	"strings"
 
+	"charm.land/bubbles/v2/key"
 	tea "charm.land/bubbletea/v2"
 	lg "charm.land/lipgloss/v2"
 
@@ -71,7 +72,7 @@ func New(th *theme.Theme, options drill.Options, single bool) *Window {
 func (window *Window) Update(msg tea.Msg) tea.Cmd {
 	switch msg := msg.(type) {
 	case tea.KeyPressMsg:
-		return window.handleKey(msg.String())
+		return window.handleKey(msg)
 	}
 
 	return nil
@@ -104,36 +105,28 @@ func (window *Window) View() string {
 	return window.theme.WindowStyle.Render(sb.String())
 }
 
-// Hints is the keys for the key hints bar.
-func (window *Window) Hints() []theme.Hint {
+// ShortHelp is the keys for the key hints bar, for the selected row.
+func (window *Window) ShortHelp() []key.Binding {
 	if window.typing {
-		return []theme.Hint{
-			{Key: "0-9", Desc: "Type"},
-			{Key: "backspace", Desc: "Delete"},
-			{Key: "jk", Desc: "Done"},
-			{Key: "q", Desc: "Quit"},
-		}
+		return []key.Binding{keys.Digit, keys.Delete, keys.Done, keys.Quit}
 	}
 
-	hints := []theme.Hint{{Key: "jk", Desc: "Move"}}
+	bindings := []key.Binding{keys.Move}
 
 	switch window.current() {
 	case startDrill, quit:
-		hints = append(hints, theme.Hint{Key: "enter", Desc: "Select"})
+		bindings = append(bindings, keys.Select)
 
 	case singleYear, showDoomsday, cheatsheet:
-		hints = append(hints, theme.Hint{Key: "enter", Desc: "Toggle"})
+		toggle := keys.Select
+		toggle.SetHelp("enter", "Toggle")
+		bindings = append(bindings, toggle)
 
 	case startYear, endYear:
-		hints = append(
-			hints,
-			theme.Hint{Key: "hl", Desc: "Change"},
-			theme.Hint{Key: "HL", Desc: "±10"},
-			theme.Hint{Key: "0-9", Desc: "Type"},
-		)
+		bindings = append(bindings, keys.Change, keys.Jump, keys.Digit)
 	}
 
-	return append(hints, theme.Hint{Key: "q", Desc: "Quit"})
+	return append(bindings, keys.Quit)
 }
 
 func getMenuTitle() string {
@@ -237,38 +230,38 @@ func (window *Window) current() menuOption {
 	return window.rows()[window.Choice]
 }
 
-func (window *Window) handleKey(key string) tea.Cmd {
+func (window *Window) handleKey(msg tea.KeyPressMsg) tea.Cmd {
 	rows := window.rows()
 
-	switch key {
-	case "up", "k":
+	switch {
+	case key.Matches(msg, keys.Up):
 		window.settle()
 		if window.Choice > 0 {
 			window.Choice--
 		}
 
-	case "down", "j":
+	case key.Matches(msg, keys.Down):
 		window.settle()
 		if window.Choice < len(rows)-1 {
 			window.Choice++
 		}
 
-	case "left", "h":
+	case key.Matches(msg, keys.Left):
 		window.adjust(-1)
 
-	case "right", "l":
+	case key.Matches(msg, keys.Right):
 		window.adjust(1)
 
-	case "shift+left", "H":
+	case key.Matches(msg, keys.JumpLeft):
 		window.adjust(-10)
 
-	case "shift+right", "L":
+	case key.Matches(msg, keys.JumpRight):
 		window.adjust(10)
 
-	case "backspace":
+	case key.Matches(msg, keys.Delete):
 		window.erase()
 
-	case "enter", "space":
+	case key.Matches(msg, keys.Select):
 		window.settle()
 
 		switch window.current() {
@@ -285,11 +278,11 @@ func (window *Window) handleKey(key string) tea.Cmd {
 			return tea.Quit
 		}
 
-	case "q":
+	case key.Matches(msg, keys.Quit):
 		return tea.Quit
 
-	default:
-		window.typeDigit(key)
+	case key.Matches(msg, keys.Digit):
+		window.typeDigit(msg.String())
 	}
 
 	return nil

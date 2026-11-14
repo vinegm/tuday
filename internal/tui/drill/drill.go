@@ -8,6 +8,7 @@ import (
 	"time"
 	"unicode"
 
+	"charm.land/bubbles/v2/key"
 	tea "charm.land/bubbletea/v2"
 
 	"github.com/vinegm/tuday/internal/doomsday"
@@ -137,31 +138,24 @@ func (window *Window) Update(msg tea.Msg) tea.Cmd {
 	return nil
 }
 
-// Hints is the keys for the key hints bar.
-func (window *Window) Hints() []theme.Hint {
+// ShortHelp is the keys for the key hints bar.
+func (window *Window) ShortHelp() []key.Binding {
 	if window.input == "" {
-		return []theme.Hint{
-			{Key: "0-7", Desc: "Answer"},
-			{Key: "esc", Desc: "Finish"},
-		}
+		return []key.Binding{keys.Weekday, keys.Finish}
 	}
 
-	return []theme.Hint{
-		{Key: "enter", Desc: "Answer"},
-		{Key: "ctrl+u", Desc: "Clear"},
-		{Key: "esc", Desc: "Finish"},
-	}
+	return []key.Binding{keys.Answer, keys.Clear, keys.Finish}
 }
 
 func (window *Window) handleKey(msg tea.KeyPressMsg) tea.Cmd {
-	switch msg.String() {
-	case "esc":
+	switch {
+	case key.Matches(msg, keys.Finish):
 		return window.finish()
 
-	case "enter":
+	case key.Matches(msg, keys.Answer):
 		return window.submit(window.input)
 
-	case "backspace":
+	case key.Matches(msg, keys.Delete):
 		runes := []rune(window.input)
 		if len(runes) > 0 {
 			window.input = string(runes[:len(runes)-1])
@@ -169,7 +163,7 @@ func (window *Window) handleKey(msg tea.KeyPressMsg) tea.Cmd {
 
 		return nil
 
-	case "ctrl+u":
+	case key.Matches(msg, keys.Clear):
 		window.input = ""
 		return nil
 	}

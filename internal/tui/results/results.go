@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 
+	"charm.land/bubbles/v2/key"
 	tea "charm.land/bubbletea/v2"
 	lg "charm.land/lipgloss/v2"
 
@@ -62,49 +63,45 @@ func (window *Window) Show(attempts []doomsday.Attempt, breakdowns []report.Brea
 func (window *Window) Update(msg tea.Msg) tea.Cmd {
 	switch msg := msg.(type) {
 	case tea.KeyPressMsg:
-		return window.handleKey(msg.String())
+		return window.handleKey(msg)
 	}
 
 	return nil
 }
 
-// Hints is the keys for the key hints bar.
-func (window *Window) Hints() []theme.Hint {
-	hints := []theme.Hint{{Key: "hl", Desc: "Breakdown"}}
+// ShortHelp is the keys for the key hints bar.
+func (window *Window) ShortHelp() []key.Binding {
+	bindings := []key.Binding{keys.Breakdown}
 
 	if window.rankedCount() > window.visible {
-		hints = append(hints, theme.Hint{Key: "jk", Desc: "Scroll"})
+		bindings = append(bindings, keys.Scroll)
 	}
 
-	return append(
-		hints,
-		theme.Hint{Key: "enter", Desc: "Again"},
-		theme.Hint{Key: "q", Desc: "Menu"},
-	)
+	return append(bindings, keys.Again, keys.Menu)
 }
 
-func (window *Window) handleKey(key string) tea.Cmd {
-	switch key {
-	case "tab", "right", "l":
+func (window *Window) handleKey(msg tea.KeyPressMsg) tea.Cmd {
+	switch {
+	case key.Matches(msg, keys.Next):
 		window.tab = (window.tab + 1) % len(window.breakdowns)
 		window.scroll = 0
 
-	case "shift+tab", "left", "h":
+	case key.Matches(msg, keys.Previous):
 		window.tab = (window.tab + len(window.breakdowns) - 1) % len(window.breakdowns)
 		window.scroll = 0
 
-	case "down", "j":
+	case key.Matches(msg, keys.Down):
 		window.scroll++
 
-	case "up", "k":
+	case key.Matches(msg, keys.Up):
 		window.scroll--
 
-	case "enter", "space", "r":
+	case key.Matches(msg, keys.Again):
 		return func() tea.Msg {
 			return AgainMsg{}
 		}
 
-	case "q", "esc":
+	case key.Matches(msg, keys.Menu):
 		return func() tea.Msg {
 			return ExitMsg{}
 		}
