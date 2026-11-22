@@ -20,6 +20,10 @@ archives:
     format_overrides:
       - goos: windows
         formats: [zip]
+    files:
+      - LICENSE*
+      - README*
+      - Themes/*
 
 checksum:
   name_template: 'checksums.txt'

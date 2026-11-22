@@ -27,6 +27,24 @@ tuday is a TUI trainer for the [Doomsday rule](https://en.wikipedia.org/wiki/Doo
 
 ## Install
 
+### Homebrew
+
+```bash
+brew install vinegm/tap/tuday
+```
+
+### Arch Linux
+
+The `PKGBUILD` in this repo installs the latest release's binary:
+
+```bash
+git clone https://github.com/vinegm/tuday.git
+cd tuday
+makepkg -si
+```
+
+### With Go
+
 With Go 1.25 or newer (see `go.mod`):
 
 ```bash
